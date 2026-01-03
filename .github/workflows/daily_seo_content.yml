@@ -1,0 +1,39 @@
+name: Daily SEO Content Generator
+
+on:
+  schedule:
+    # Runs at 08:00 UTC every day
+    - cron: '0 8 * * *'
+  workflow_dispatch: # Allows manual click-to-run for testing
+
+jobs:
+  generate-content:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Allows the bot to commit the new content back to the repo
+
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Generator Script
+        env:
+          GOOGLE_CLOUD_API_KEY: ${{ secrets.GEMINI_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_KEY }}
+        run: python products/seo_pages/_generator.py
+
+      - name: Commit and Push New Content
+        run: |
+          git config --global user.name "AI Content Bot"
+          git config --global user.email "bot@classic.ai"
+          git add products/seo_pages/output/
+          git commit -m "Auto-generated content for $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push
