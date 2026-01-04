@@ -26,7 +26,7 @@ export default function BlogPostPage({ params }: Props) {
             <p className="text-sm text-gray-500 mb-6">{meta.date}</p>
           )}
 
-          <div className="prose prose-slate max-w-none">
+          <div className="prose prose-invert max-w-none">
             <MDXRemote source={content} />
           </div>
         </article>
