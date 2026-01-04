@@ -1,4 +1,6 @@
 # core/providers.py
+from dotenv import load_dotenv
+load_dotenv()
 
 import os
 import time
@@ -9,13 +11,14 @@ from google.genai import types
 from groq import Groq
 
 
-# ---------- GEMINI 2.5 FLASH-LITE ----------
+# ---------- GEMINI 2.5 FLASH-LITE (DIRECT GEMINI API) ----------
 
 def _gemini_client():
     api_key = os.environ.get("GOOGLE_CLOUD_API_KEY")
     if not api_key:
         raise RuntimeError("GOOGLE_CLOUD_API_KEY is not set")
-    return genai.Client(vertexai=True, api_key=api_key)
+    # NOTE: no vertexai=True here
+    return genai.Client(api_key=api_key)
 
 
 def gemini_flash_lite(prompt: str) -> str:
@@ -45,8 +48,7 @@ def gemini_flash_lite(prompt: str) -> str:
         thinking_config=types.ThinkingConfig(thinking_budget=0),
     )
 
-    # Simple free-tier guard
-    time.sleep(4)
+    time.sleep(4)  # free-tier guard
 
     chunks = client.models.generate_content_stream(
         model=model,
@@ -74,15 +76,13 @@ def _groq_client():
     return Groq(api_key=api_key)
 
 
-def groq_llama3(prompt: str, model: str = "llama3-70b-8192") -> str:
+def groq_llama3(prompt: str, model: str = "llama-3.3-70b-versatile") -> str:
     client = _groq_client()
-
-    # Conservative rate-limit guard for free/dev tier
     time.sleep(2)
-
     completion = client.chat.completions.create(
         model=model,
         messages=[{"role": "user", "content": prompt}],
         temperature=0.7,
     )
     return completion.choices[0].message.content
+
