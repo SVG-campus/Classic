@@ -1,6 +1,7 @@
 name = "classic-ai-worker"
 main = "src/index.js"
 compatibility_date = "2024-04-01"
+account_id = "9395f2f2b1f35f10ab374b8b6583437d"
 
 [ai]
 binding = "AI"
