@@ -10,12 +10,40 @@ sys.path.append(ROOT)
 from core.providers import gemini_flash_lite, groq_llama3
 
 TOPICS = [
+    # -- Initial Batch --
     "AI Agents for Real Estate", 
     "Automated Email Marketing 2026", 
     "Python for SEO Automation",
     "Best Free AI APIs 2026",
-    # Add more topics here to scale up!
+    
+    # -- New Batch (SEO & Automation) --
+    "How to Build a Programmatic SEO Site with Next.js",
+    "Top 10 Python Libraries for SEO Analysis",
+    "Automating Keyword Research with Google Gemini",
+    "Using Cloudflare Workers for SEO Redirects",
+    "Next.js vs WordPress for SEO in 2026",
+    "How to Generate SEO Meta Descriptions with AI",
+    "Building an Internal Link Graph with Python",
+    "Technical SEO Audit Checklist 2026",
+    "Automating Google Search Console Reporting",
+    "AI Content Strategy for B2B SaaS",
+    
+    # -- New Batch (AI Tools) --
+    "Best Open Source LLMs for Content Generation",
+    "How to Fine-Tune Llama 3 for SEO Writing",
+    "Building an AI Writing Assistant with Groq",
+    "Automating Social Media Posts with Pollinations AI",
+    "Using AI Agents for Competitor Analysis",
+    "How to Scale Content Production with Python",
+    
+    # -- New Batch (Niche Verticals) --
+    "SEO Strategies for Real Estate Agents",
+    "AI Marketing Automation for E-commerce",
+    "Local SEO Automation for Small Business",
+    "Programmatic SEO for Travel Websites",
+    "Automating Lead Generation with AI Agents"
 ]
+
 
 def slugify(text):
     """Convert title to SEO-friendly slug (e.g., 'AI Agents' -> 'ai-agents')"""
